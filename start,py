@@ -12,7 +12,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 #Путь до файла
-path = r"C:\Users\Администратор\Desktop\currency.txt"
+path = r"C:\currency.txt"
 #Адрес сайта
 url = 'https://telemetr.me/content/steamrub'
 
