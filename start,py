@@ -1,0 +1,36 @@
+# * * * * * * * * * * * * * * * * * * * * * * * * * * * *#
+#   Спарсить курс валюты с сайта https://telemetr.me     #
+#   с канала steamrub                                    #        
+#                                                        #
+#   Установка доп. либ.                                  #
+#   pip install BeautifulSoup4                           #
+#   pip install lxml                                     #
+#                                                        #
+# * * * * * * * * * * * * * * * * * * * * * * * * * * * *#
+
+import requests
+from bs4 import BeautifulSoup
+import re
+#Путь до файла
+path = r"C:\Users\Администратор\Desktop\currency.txt"
+#Адрес сайта
+url = 'https://telemetr.me/content/steamrub'
+
+response = requests.get(url)
+soup = BeautifulSoup(response.text, 'lxml')
+
+#Парсим сайт
+divAll = soup.find('div', class_='card tx-thin tx-black mg-b-20')
+div = divAll.find('div', class_='card-body').text
+#Удаляем мусор
+div = re.sub("^\s+|\n|\r|\s+$", '', div)
+data = div.replace('RUB','')
+#Разделиьт строку по селектору =
+current = data.split('=')
+#Удалить первый пробел
+data = current[1].replace(' ','')
+
+#Открыть файл и записать в него результат
+f = open(path, "w")
+f.write(str(data))
+f.close()
